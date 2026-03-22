@@ -1,0 +1,75 @@
+# MSCS_634_Lab_2 – KNN and RNN Classification
+
+**Course:** MSCS 634 – Advanced Data Mining and Big Data Analytics  
+**Lab:** Assignment 2 – K-Nearest Neighbors (KNN) and Radius Neighbors (RNN)
+
+---
+
+## Purpose
+
+This lab explores the performance of two distance-based classifiers — **K-Nearest Neighbors (KNN)** and **Radius Neighbors (RNN)** — on the **Wine Dataset** from `sklearn`. The dataset contains 178 samples of wine described by 13 chemical properties and labelled into 3 classes. The goal is to understand how the choice of `k` (KNN) and `radius` (RNN) affects classification accuracy.
+
+---
+
+## Repository Contents
+
+| File | Description |
+|------|-------------|
+| `MSCS_634_Lab_2.ipynb` | Main Jupyter Notebook with all code, plots, and analysis |
+| `README.md` | This file |
+
+---
+
+## Key Steps
+
+1. **Data Preparation** – Loaded the Wine Dataset, reviewed class distribution, split 80/20, and applied `StandardScaler` (essential for distance-based methods).
+2. **KNN** – Tested k ∈ {1, 5, 11, 15, 21} and recorded test accuracy.
+3. **RNN** – Tested radius ∈ {350, 400, 450, 500, 550, 600} (in scaled feature space) and recorded test accuracy.
+4. **Visualisation** – Plotted accuracy vs. parameter value for both models and compared best/worst performance.
+
+---
+
+## Key Insights
+
+### KNN
+- **k = 1** shows high sensitivity to individual training points (potential overfitting).
+- Accuracy generally improves as `k` increases, with diminishing returns beyond k ≈ 11.
+- A moderate `k` (5–11) offers the best bias-variance trade-off on this dataset.
+
+### RNN
+- After standardisation, even relatively large radius values (350–600) yield similar accuracy because the scaled feature space is compact.
+- RNN accuracy is more stable across parameter choices than KNN, suggesting the Wine classes are well-separated after scaling.
+
+### Model Comparison
+| Scenario | Preferred Model |
+|----------|----------------|
+| Every sample must be classified | **KNN** |
+| Varying data density / want abstention on uncertain points | **RNN** |
+| Need intuitive parameter tuning | **KNN** (k = count of neighbours) |
+| Production system with balanced classes | Either — both perform similarly here |
+
+---
+
+## Challenges and Decisions
+
+- **Feature scaling** is critical for both classifiers. Without `StandardScaler`, features with large numeric ranges (e.g., `proline` ≈ 278–1680) dominate the distance calculation and degrade accuracy significantly.
+- **RNN outlier handling** – test samples with no neighbours within the radius are classified using `outlier_label='most_frequent'` to avoid prediction failures.
+- The radius values (350–600) were chosen to work in the *scaled* feature space rather than the raw feature space, where appropriate radii would be in the hundreds of original units.
+
+---
+
+## How to Run
+
+```bash
+# Clone the repository
+git clone https://github.com/<your-username>/MSCS_634_Lab_2.git
+cd MSCS_634_Lab_2
+
+# Install dependencies
+pip install scikit-learn numpy pandas matplotlib notebook
+
+# Launch Jupyter
+jupyter notebook MSCS_634_Lab_2.ipynb
+```
+
+Python ≥ 3.9 and scikit-learn ≥ 1.0 are recommended.
