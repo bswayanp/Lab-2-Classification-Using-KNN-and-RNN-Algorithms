@@ -62,7 +62,7 @@ This lab explores the performance of two distance-based classifiers — **K-Near
 
 ```bash
 # Clone the repository
-git clone https://github.com/<your-username>/MSCS_634_Lab_2.git
+git clone https://github.com/bswayanp/Lab-2-Classification-Using-KNN-and-RNN-Algorithms
 cd MSCS_634_Lab_2
 
 # Install dependencies
